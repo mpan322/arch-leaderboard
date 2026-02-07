@@ -6,7 +6,7 @@ from apiflask import abort
 from argon2 import PasswordHasher
 from pydantic import BaseModel
 
-from src.user.dto import UserDto
+from src.user.dto import ApiKeyDto, UserDto
 from src.user.repo import UserRepo
 from src.utils import db
 from src.utils.settings import SETTINGS
@@ -65,7 +65,7 @@ class AuthService:
             access_token = AuthService.__generate_access(user_id)
 
             # create and get the new user
-            UserRepo.create(user_id, dto.email, pswd_hash, access_token)
+            UserRepo.create(user_id, dto.email, pswd_hash)
             user = UserRepo.get_by_id(user_id)
             if user is None:
                 abort(500, "signup implementation error")
@@ -74,10 +74,25 @@ class AuthService:
             return (user_res, access_token)
 
     @staticmethod
-    def access(access_token: str) -> UserDto:
+    def create_api_key(user: UserDto) -> ApiKeyDto:
+        with db.session.begin():
+            api_key = "ARCH_" + str(uuid4())
+            UserRepo.set_api_key(user.id, api_key)
+            return ApiKeyDto(api_key=api_key)
+
+    @staticmethod
+    def token_access(access_token: str) -> UserDto:
         user_id = AuthService.__decode_access(access_token)
         with db.session.begin():
             user = UserRepo.get_by_id(user_id)
+            if user is None:
+                abort(401, "unauthorized")
+            return UserDto.model_validate(user)
+
+    @staticmethod
+    def api_key_access(api_key: str) -> UserDto:
+        with db.session.begin():
+            user = UserRepo.get_by_api_key(api_key)
             if user is None:
                 abort(401, "unauthorized")
             return UserDto.model_validate(user)

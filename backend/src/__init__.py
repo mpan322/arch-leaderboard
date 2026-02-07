@@ -44,5 +44,6 @@ def register_secutiry(app: APIFlask):
             "type": "apiKey",
             "in": "cookie",
             "name": "access_token",
-        }
+        },
+        "BearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"},
     }

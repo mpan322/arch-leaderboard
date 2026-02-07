@@ -10,8 +10,10 @@ class UserModel(Base):
     __tablename__ = "user"
 
     id: Mapped[str] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(unique=True)
+    email: Mapped[str] = mapped_column(unique=True, index=True)
     password: Mapped[str]
-    access_token: Mapped[str]
+    api_key: Mapped[str | None] = mapped_column(
+        unique=True, nullable=True, index=True, init=False
+    )
 
     times: Mapped[list["TimeModel"]] = relationship(back_populates="poster", init=False)
