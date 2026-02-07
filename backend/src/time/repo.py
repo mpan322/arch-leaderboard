@@ -17,6 +17,7 @@ class TimeRepo:
             cache_file=dto.cache_file,
             trace_file=dto.trace_file,
             millis=dto.millis,
+            language=dto.language,
         )
         db.session.add(time)
 
@@ -26,4 +27,6 @@ class TimeRepo:
 
     @staticmethod
     def get_all() -> Sequence[TimeModel]:
-        return db.session.scalars(select(TimeModel)).all()
+        return db.session.scalars(
+            select(TimeModel).order_by(TimeModel.millis.asc())
+        ).all()

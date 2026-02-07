@@ -7,11 +7,13 @@ from .time import time_bp
 from .utils import db, heartbeat_bp
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
+from flask_cors import CORS
 
 
 def create_app():
     print("[APP SETTINGS]", SETTINGS)
     app = APIFlask(__name__, title="arch-leader", version="0.1.0")
+    CORS(app)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = SETTINGS.DATABASE_URL
     app.config["DEBUG"] = SETTINGS.DEBUG

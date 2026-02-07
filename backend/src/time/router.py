@@ -18,6 +18,5 @@ def record(json_data: RecordTimeReqDto):
 
 @time_bp.get("/")
 @time_bp.output(GetTimesResDto, 200)
-@auth_guard
 def get_all():
     return TimeService.get_all().model_dump()

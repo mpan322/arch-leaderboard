@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 from src.user.dto import UserDto
@@ -8,6 +9,7 @@ class RecordTimeReqDto(BaseModel):
     cache_file: str
     trace_file: str
     output_json: str
+    language: str
 
 
 class TimeDto(BaseModel):
@@ -20,6 +22,8 @@ class TimeDto(BaseModel):
     validated: bool
     output_json: str
     poster: UserDto
+    language: str
+    timestamp: datetime
 
 
 class GetTimesResDto(BaseModel):
