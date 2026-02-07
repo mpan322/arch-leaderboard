@@ -35,11 +35,3 @@ class UserRepo:
     def exists_by_email(email: str) -> bool:
         is_exists = db.session.scalar(select(exists().where(UserModel.email == email)))
         return (is_exists is not None) and is_exists
-
-    @staticmethod
-    def update_access_token(user_id: str, access_token: str) -> None:
-        db.session.execute(
-            update(UserModel)
-            .where(UserModel.id == user_id)
-            .values(access_token=access_token)
-        )

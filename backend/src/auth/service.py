@@ -44,7 +44,6 @@ class AuthService:
 
             # generate the access token and update in database
             access_token = AuthService.__generate_access(str(user.id))
-            UserRepo.update_access_token(user.id, access_token)
 
             return (user_res, access_token)
 

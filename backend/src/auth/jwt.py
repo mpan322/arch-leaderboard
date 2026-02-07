@@ -12,6 +12,5 @@ def set_access_token(resp: Response, access_token: str) -> None:
         ACCESS_TOKEN_COOKIE_KEY,
         access_token,
         httponly=True,
-        secure=True,
-        samesite="Lax",
+        secure=False,
     )

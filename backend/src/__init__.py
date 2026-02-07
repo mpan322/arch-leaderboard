@@ -13,7 +13,7 @@ from flask_cors import CORS
 def create_app():
     print("[APP SETTINGS]", SETTINGS)
     app = APIFlask(__name__, title="arch-leader", version="0.1.0")
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = SETTINGS.DATABASE_URL
     app.config["DEBUG"] = SETTINGS.DEBUG
