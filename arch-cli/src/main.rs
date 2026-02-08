@@ -5,7 +5,7 @@ use clap::Parser;
 
 use crate::{
     args::Args,
-    json_data::{ApiKeyData, TimeData, parse_file},
+    json_data::{ApiKeyData, Metadata, ResultData, make_time_record, parse_file},
     time::TimeService,
 };
 
@@ -21,6 +21,7 @@ async fn main() {
         Err(CLIError::BadDataFile(err)) => println!("Failed to parse data: {}", err),
         Err(CLIError::UploadFailed(err)) => println!("Failed to upload data: {}", err),
         Err(CLIError::BadAPIFile(err)) => println!("Failed to parse api key file: {}", err),
+        Err(CLIError::BadResultsFile(err)) => println!("Failed to parse results file: {}", err),
         Ok(()) => {}
     }
 }
@@ -28,6 +29,7 @@ async fn main() {
 enum CLIError {
     BadAPIFile(Box<dyn Error>),
     BadDataFile(Box<dyn Error>),
+    BadResultsFile(Box<dyn Error>),
     UploadFailed(Box<dyn Error>),
 }
 
@@ -36,9 +38,11 @@ async fn run_command(args: Args) -> Result<(), CLIError> {
         .map_err(CLIError::BadAPIFile)?
         .api_key;
 
-    let time_data = parse_file::<TimeData>(&args.data)
-        .map_err(CLIError::BadDataFile)?
-        .into();
+    let results = parse_file::<ResultData>(&args.results).map_err(CLIError::BadResultsFile)?;
+
+    let metadata = parse_file::<Metadata>(&args.metadata).map_err(CLIError::BadDataFile)?;
+    let time_record = make_time_record(results, metadata);
+
     println!("[LOG] parsed files");
 
     let mut config = Configuration::new();
@@ -47,7 +51,7 @@ async fn run_command(args: Args) -> Result<(), CLIError> {
     println!("[LOG] starting request...");
     let service = TimeService::new(config);
     service
-        .record_time(time_data)
+        .record_time(time_record)
         .await
         .map_err(Box::new)
         .map_err(|e| CLIError::UploadFailed(e))?;

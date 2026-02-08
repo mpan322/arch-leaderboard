@@ -7,7 +7,11 @@ pub struct Args {
     #[arg(short, long, default_value = "./arch-api-key.json")]
     pub api_key: String,
 
-    /// path to data json.
+    /// path to metadata json.
     #[arg(short, long)]
-    pub data: String,
+    pub metadata: String,
+
+    /// path to results json.
+    #[arg(short, long)]
+    pub results: String,
 }
