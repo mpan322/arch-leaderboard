@@ -10,3 +10,4 @@ class UserDto(BaseModel):
 
     id: str
     email: EmailStr
+    is_verified: bool
