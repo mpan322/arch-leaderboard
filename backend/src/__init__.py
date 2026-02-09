@@ -8,6 +8,7 @@ from .utils import db, heartbeat_bp
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 
 def create_app():
@@ -27,6 +28,8 @@ def create_app():
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
+    migrate = Migrate(app, db)
 
     return app
 

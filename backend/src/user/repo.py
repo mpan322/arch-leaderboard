@@ -5,11 +5,12 @@ from src.utils import db
 
 class UserRepo:
     @staticmethod
-    def create(user_id: str, email: str, password: str) -> None:
+    def create(user_id: str, email: str, password: str, otp: str) -> None:
         user = UserModel(
             id=user_id,
             email=email,
             password=password,
+            otp=otp,
         )
         db.session.add(user)
 
@@ -35,3 +36,15 @@ class UserRepo:
     def exists_by_email(email: str) -> bool:
         is_exists = db.session.scalar(select(exists().where(UserModel.email == email)))
         return (is_exists is not None) and is_exists
+
+    @staticmethod
+    def set_new_otp(user_id: str, otp: str) -> None:
+        db.session.execute(
+            update(UserModel).where(UserModel.id == user_id).values(otp=otp)
+        )
+
+    @staticmethod
+    def verify(user_id: str) -> None:
+        db.session.execute(
+            update(UserModel).where(UserModel.id == user_id).values(is_verified=True)
+        )

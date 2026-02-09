@@ -15,5 +15,7 @@ class UserModel(Base):
     api_key: Mapped[str | None] = mapped_column(
         unique=True, nullable=True, index=True, init=False
     )
+    otp: Mapped[str] = mapped_column(init=True)
+    is_verified: Mapped[bool] = mapped_column(default=False, init=False)
 
     times: Mapped[list["TimeModel"]] = relationship(back_populates="poster", init=False)

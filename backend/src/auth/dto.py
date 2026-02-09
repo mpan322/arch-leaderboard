@@ -27,3 +27,7 @@ class SignupDto(BaseModel):
 class LoginDto(BaseModel):
     email: EmailStr
     password: SecretStr
+
+
+class VerifyDto(BaseModel):
+    otp: str
