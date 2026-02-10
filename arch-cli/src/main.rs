@@ -47,6 +47,7 @@ async fn run_command(args: Args) -> Result<(), CLIError> {
 
     let mut config = Configuration::new();
     config.bearer_access_token = Some(api_key);
+    config.base_path = "https://mp322.teaching.cs.st-andrews.ac.uk/api".to_owned();
 
     println!("[LOG] starting request...");
     let service = TimeService::new(config);
