@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+*.crt
+*.cert
+*.pem
+*.key
+ 
 instance/
 __pycache__/
 *.py[codz]
