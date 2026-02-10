@@ -32,6 +32,7 @@ import type {
 } from '.././model';
 
 import { customInstance } from '../../utils/custom-instance';
+import type { ErrorType } from '../../utils/custom-instance';
 
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
@@ -63,7 +64,7 @@ export const getGetTimeQueryKey = () => {
     }
 
     
-export const getGetTimeQueryOptions = <TData = Awaited<ReturnType<typeof getTime>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTime>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetTimeQueryOptions = <TData = Awaited<ReturnType<typeof getTime>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTime>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -82,10 +83,10 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 }
 
 export type GetTimeQueryResult = NonNullable<Awaited<ReturnType<typeof getTime>>>
-export type GetTimeQueryError = unknown
+export type GetTimeQueryError = ErrorType<unknown>
 
 
-export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = unknown>(
+export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = ErrorType<unknown>>(
   options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTime>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTime>>,
@@ -95,7 +96,7 @@ export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError =
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = unknown>(
+export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = ErrorType<unknown>>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTime>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTime>>,
@@ -105,7 +106,7 @@ export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError =
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = unknown>(
+export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = ErrorType<unknown>>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTime>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -113,7 +114,7 @@ export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError =
  * @summary Get All
  */
 
-export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = unknown>(
+export function useGetTime<TData = Awaited<ReturnType<typeof getTime>>, TError = ErrorType<unknown>>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTime>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -147,7 +148,7 @@ export const postTimeRecord = (
   
 
 
-export const getPostTimeRecordMutationOptions = <TError = HTTPError | ValidationError,
+export const getPostTimeRecordMutationOptions = <TError = ErrorType<HTTPError | ValidationError>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postTimeRecord>>, TError,{data: RecordTimeReqDto}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof postTimeRecord>>, TError,{data: RecordTimeReqDto}, TContext> => {
 
@@ -176,12 +177,12 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
     export type PostTimeRecordMutationResult = NonNullable<Awaited<ReturnType<typeof postTimeRecord>>>
     export type PostTimeRecordMutationBody = RecordTimeReqDto
-    export type PostTimeRecordMutationError = HTTPError | ValidationError
+    export type PostTimeRecordMutationError = ErrorType<HTTPError | ValidationError>
 
     /**
  * @summary Record
  */
-export const usePostTimeRecord = <TError = HTTPError | ValidationError,
+export const usePostTimeRecord = <TError = ErrorType<HTTPError | ValidationError>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postTimeRecord>>, TError,{data: RecordTimeReqDto}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof postTimeRecord>>,

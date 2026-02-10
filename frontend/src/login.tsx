@@ -27,7 +27,7 @@ export function Login() {
       },
     }, {
       onError(error) {
-        showAlert(error.message ?? "failed to login", "error");
+        showAlert(error.response?.data.message ?? "failed to login", "error");
       },
       onSuccess() {
         navigate("/");

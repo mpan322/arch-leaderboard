@@ -1,4 +1,10 @@
-import axios, { type AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
+
+export type ErrorResp = {
+    message: string;
+}
+
+export type ErrorType<_Error> = AxiosError<ErrorResp>;
 
 export const AXIOS_INSTANCE = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,

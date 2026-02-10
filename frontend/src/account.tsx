@@ -160,7 +160,7 @@ export function VerifyAccountCard({
       },
     }, {
       onError(error) {
-        showAlert(error.message ?? "Failed to verify account.", "error");
+        showAlert(error.response?.data.message ?? "Failed to verify account.", "error");
         setOtp("");
       },
       onSuccess() {
@@ -174,7 +174,7 @@ export function VerifyAccountCard({
     console.log("resending!");
     resend(void (0), {
       onError(error) {
-        showAlert(error.message ?? "Failed to resend otp.", "success");
+        showAlert(error.response?.data.message ?? "Failed to resend otp.", "success");
       },
       onSuccess() {
         showAlert("Verification code sent", "success");
@@ -220,7 +220,7 @@ function LogoutCard() {
         navigate("/");
       },
       onError(error) {
-        showAlert(error.message ?? "Failed to logout.", "error");
+        showAlert(error.response?.data.message ?? "Failed to logout.", "error");
       }
     });
   }

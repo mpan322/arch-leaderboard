@@ -11,9 +11,9 @@ export default defineConfig({
       override: {
         mutator: {
           path: "./src/utils/custom-instance.ts",
-          name: "customInstance"
-        }
-      }
+          name: "customInstance",
+        },
+      },
     },
     input: {
       target: './openapi.json',

@@ -20,6 +20,7 @@ import type {
 } from '@tanstack/react-query';
 
 import { customInstance } from '../../utils/custom-instance';
+import type { ErrorType } from '../../utils/custom-instance';
 
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
@@ -51,7 +52,7 @@ export const getGetHeartbeatQueryKey = () => {
     }
 
     
-export const getGetHeartbeatQueryOptions = <TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHeartbeat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetHeartbeatQueryOptions = <TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHeartbeat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -70,10 +71,10 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 }
 
 export type GetHeartbeatQueryResult = NonNullable<Awaited<ReturnType<typeof getHeartbeat>>>
-export type GetHeartbeatQueryError = unknown
+export type GetHeartbeatQueryError = ErrorType<unknown>
 
 
-export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = unknown>(
+export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = ErrorType<unknown>>(
   options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHeartbeat>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getHeartbeat>>,
@@ -83,7 +84,7 @@ export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = unknown>(
+export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = ErrorType<unknown>>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHeartbeat>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getHeartbeat>>,
@@ -93,7 +94,7 @@ export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = unknown>(
+export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = ErrorType<unknown>>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHeartbeat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
@@ -101,7 +102,7 @@ export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>
  * @summary Heartbeat
  */
 
-export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = unknown>(
+export function useGetHeartbeat<TData = Awaited<ReturnType<typeof getHeartbeat>>, TError = ErrorType<unknown>>(
   options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getHeartbeat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {

@@ -27,7 +27,7 @@ export function SignUp() {
       },
     }, {
       onError(error) {
-        showAlert(error.message ?? "failed to sign up", "error");
+        showAlert(error.response?.data.message ?? "failed to sign up", "error");
       },
       onSuccess() {
         navigate("/otp");
@@ -96,7 +96,10 @@ export function SignUp() {
               </label>
               <p className="validator-hint hidden">
                 Must be more than 8 characters, including
-                <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter
+                <br />At least one number
+                <br />At least one lowercase letter
+                <br />At least one uppercase letter
+                <br />At least one special character
               </p>
             </fieldset>
 
