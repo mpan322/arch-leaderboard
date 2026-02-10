@@ -33,7 +33,7 @@ function getBest(elems: RowProps[]) {
 
 function MainContent() {
   const [filters, setFilters] = useState<Filters>({})
-  const { data, isLoading, error } = useGetTime();
+  const { data, isLoading, error } = useGetTime({ query: { retry: false } });
   const showAlert = useAlert()
 
   useEffect(() => {
