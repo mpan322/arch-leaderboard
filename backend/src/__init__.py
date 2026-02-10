@@ -9,7 +9,6 @@ from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from flask_cors import CORS
 from flask_migrate import Migrate
-from flask_talisman import Talisman
 
 
 def create_app():
@@ -17,6 +16,7 @@ def create_app():
     app = APIFlask(__name__, title="arch-leader", version="0.1.0")
     CORS(app, supports_credentials=True)
 
+    app.config["OPENAPI_VERSION"] = "3.0.0"
     app.config["SQLALCHEMY_DATABASE_URI"] = SETTINGS.DATABASE_URL
 
     app.register_blueprint(user_bp)
@@ -30,7 +30,6 @@ def create_app():
         db.create_all()
 
     Migrate(app, db)
-    Talisman(app, force_https=not app.debug)
 
     return app
 
