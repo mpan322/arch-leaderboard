@@ -8,4 +8,5 @@
 export interface TimeDtoUserDto {
   email: string;
   id: string;
+  is_verified: boolean;
 }

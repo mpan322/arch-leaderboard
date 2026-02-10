@@ -1,12 +1,13 @@
 from apiflask import APIBlueprint
 from flask import Response, jsonify, make_response
+from werkzeug.wrappers import response
 
 from src.auth.guard import auth_guard, get_user_dto, get_user_model, verify_auth_guard
-from src.auth.jwt import set_access_token
+from src.auth.jwt import delete_access_token, set_access_token
 from src.utils import db
 
 from .service import AuthService
-from .dto import LoginDto, SignupDto, VerifyDto
+from .dto import LoginDto, LogoutDto, SignupDto, VerifyDto
 from src.user.dto import ApiKeyDto, UserDto
 
 auth_bp = APIBlueprint("auth", __name__, url_prefix="/auth")
@@ -53,6 +54,16 @@ def resend_otp() -> str:
     AuthService.send_new_otp(user)
     db.session.commit()
     return "OK"
+
+
+@auth_bp.post("/logout")
+@verify_auth_guard
+def logout() -> Response:
+    logout = LogoutDto(message="Successfully logged out.")
+    resp = make_response(jsonify(logout.model_dump()), 201)
+    delete_access_token(resp)
+    db.session.commit()
+    return resp
 
 
 @auth_bp.get("/api-key")

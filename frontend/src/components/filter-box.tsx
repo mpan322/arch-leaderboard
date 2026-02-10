@@ -1,9 +1,6 @@
 import { useCallback, useMemo } from "react";
 import type { TimeDto } from "../api/model";
 import { pop, unique, uniqueKey } from "../utils/ops";
-import { useGetAuthApiKey } from "../api/auth/auth";
-import { useAlert } from "./alert";
-import { saveAs } from "file-saver";
 
 export type Filters = {
   posterId?: string;
@@ -24,15 +21,6 @@ export function FilterBox({
   filters,
   setFilters
 }: FilterBoxProps) {
-  const { refetch } = useGetAuthApiKey({
-    query: {
-      enabled: false,
-      retry: false,
-    }
-  });
-
-  const showAlert = useAlert()
-
   const [languages, caches, traces, posters] = useMemo(() => {
     const languages = unique(data.map(pop("language")));
     const caches = unique(data.map(pop("cache_file")));
@@ -41,23 +29,13 @@ export function FilterBox({
     return [languages, caches, traces, posters] as const;
   }, [data]);
 
+
   const setKey = useCallback(<K extends keyof Filters,>(key: K, value: Filters[K]) => {
     setFilters(curr => ({
       ...curr,
       [key]: value
     }))
   }, [setFilters])
-
-  async function getApiKey() {
-    console.log("saving file");
-    const { data, error } = await refetch();
-    if (data) {
-      const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-      saveAs(blob, "arch-api-key.json");
-    } else {
-      showAlert(error?.message ?? "failed to get api key");
-    }
-  }
 
   return (
     <div className="w-full lg:w-70 h-fit px-4 py-2 rounded-box bg-base-100 border-base-content/5 overflow-x-auto flex flex-col">
@@ -130,10 +108,6 @@ export function FilterBox({
       <button className="btn btn-error btn-outline mt-3"
         onClick={() => setFilters({})}>
         Clear
-      </button>
-
-      <button className="btn btn-primary mt-3" onClick={getApiKey}>
-        Get Token
       </button>
     </div>
   );

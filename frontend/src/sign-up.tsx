@@ -27,10 +27,10 @@ export function SignUp() {
       },
     }, {
       onError(error) {
-        showAlert(error.message ?? "failed to sign up");
+        showAlert(error.message ?? "failed to sign up", "error");
       },
       onSuccess() {
-        navigate("/");
+        navigate("/otp");
       }
     });
   }

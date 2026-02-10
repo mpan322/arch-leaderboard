@@ -5,8 +5,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface GetTimesResDtoUserDto {
-  email: string;
-  id: string;
-  is_verified: boolean;
+export interface VerifyDto {
+  otp: string;
 }

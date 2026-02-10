@@ -29,7 +29,8 @@ import type {
   LoginDto,
   SignupDto,
   UserDto,
-  ValidationError
+  ValidationError,
+  VerifyDto
 } from '.././model';
 
 import { customInstance } from '../../utils/custom-instance';
@@ -193,6 +194,128 @@ export const usePostAuthLogin = <TError = ValidationError,
       return useMutation(getPostAuthLoginMutationOptions(options), queryClient);
     }
     /**
+ * @summary Logout
+ */
+export const postAuthLogout = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<unknown>(
+      {url: `/auth/logout`, method: 'POST', signal
+    },
+      options);
+    }
+  
+
+
+export const getPostAuthLogoutMutationOptions = <TError = HTTPError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext> => {
+
+const mutationKey = ['postAuthLogout'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postAuthLogout>>, void> = () => {
+          
+
+          return  postAuthLogout(requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PostAuthLogoutMutationResult = NonNullable<Awaited<ReturnType<typeof postAuthLogout>>>
+    
+    export type PostAuthLogoutMutationError = HTTPError
+
+    /**
+ * @summary Logout
+ */
+export const usePostAuthLogout = <TError = HTTPError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postAuthLogout>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof postAuthLogout>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getPostAuthLogoutMutationOptions(options), queryClient);
+    }
+    /**
+ * @summary Resend Otp
+ */
+export const patchAuthResendOtp = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<unknown>(
+      {url: `/auth/resend-otp`, method: 'PATCH', signal
+    },
+      options);
+    }
+  
+
+
+export const getPatchAuthResendOtpMutationOptions = <TError = HTTPError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchAuthResendOtp>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchAuthResendOtp>>, TError,void, TContext> => {
+
+const mutationKey = ['patchAuthResendOtp'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchAuthResendOtp>>, void> = () => {
+          
+
+          return  patchAuthResendOtp(requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchAuthResendOtpMutationResult = NonNullable<Awaited<ReturnType<typeof patchAuthResendOtp>>>
+    
+    export type PatchAuthResendOtpMutationError = HTTPError
+
+    /**
+ * @summary Resend Otp
+ */
+export const usePatchAuthResendOtp = <TError = HTTPError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchAuthResendOtp>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchAuthResendOtp>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getPatchAuthResendOtpMutationOptions(options), queryClient);
+    }
+    /**
  * @summary Signup
  */
 export const postAuthSignup = (
@@ -254,5 +377,68 @@ export const usePostAuthSignup = <TError = ValidationError,
         TContext
       > => {
       return useMutation(getPostAuthSignupMutationOptions(options), queryClient);
+    }
+    /**
+ * @summary Verify
+ */
+export const patchAuthVerify = (
+    verifyDto: VerifyDto,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<unknown>(
+      {url: `/auth/verify`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: verifyDto, signal
+    },
+      options);
+    }
+  
+
+
+export const getPatchAuthVerifyMutationOptions = <TError = HTTPError | ValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchAuthVerify>>, TError,{data: VerifyDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchAuthVerify>>, TError,{data: VerifyDto}, TContext> => {
+
+const mutationKey = ['patchAuthVerify'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchAuthVerify>>, {data: VerifyDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  patchAuthVerify(data,requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchAuthVerifyMutationResult = NonNullable<Awaited<ReturnType<typeof patchAuthVerify>>>
+    export type PatchAuthVerifyMutationBody = VerifyDto
+    export type PatchAuthVerifyMutationError = HTTPError | ValidationError
+
+    /**
+ * @summary Verify
+ */
+export const usePatchAuthVerify = <TError = HTTPError | ValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchAuthVerify>>, TError,{data: VerifyDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchAuthVerify>>,
+        TError,
+        {data: VerifyDto},
+        TContext
+      > => {
+      return useMutation(getPatchAuthVerifyMutationOptions(options), queryClient);
     }
     

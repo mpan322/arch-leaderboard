@@ -41,7 +41,7 @@ export function ScoreTable({ data }: ScoreTableProps) {
 function Row({ data, rank }: RowProps) {
   return (
     <tr className="flex">
-      <th className="flex-1">{rank}</th>
+      <th className="flex-1">{1 + rank}</th>
       <td className="flex-1">{data.millis}</td>
       <td className="flex-1">{data.poster.email}</td>
       <td className="flex-1">{data.language}</td>

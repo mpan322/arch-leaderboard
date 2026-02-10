@@ -38,7 +38,7 @@ function MainContent() {
 
   useEffect(() => {
     if (!error) return;
-    showAlert("failed to get times");
+    showAlert("failed to get times", "error");
   }, [error]);
 
   const ranked = useMemo(() => {

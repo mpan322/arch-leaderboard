@@ -14,3 +14,7 @@ def set_access_token(resp: Response, access_token: str) -> None:
         httponly=True,
         secure=False,
     )
+
+
+def delete_access_token(resp: Response) -> None:
+    resp.set_cookie(ACCESS_TOKEN_COOKIE_KEY, "", expires=0, httponly=True, secure=False)

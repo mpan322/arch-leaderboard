@@ -13,7 +13,7 @@ export function Login() {
   const [data, setData] = useState<LogInData>({});
   const { mutate, isPending } = usePostAuthLogin();
   const navigate = useNavigate();
-  const showAlert = useAlert()
+  const showAlert = useAlert();
 
   function handleSignup() {
     const { email, password } = data;
@@ -27,7 +27,7 @@ export function Login() {
       },
     }, {
       onError(error) {
-        showAlert(error.message ?? "failed to login");
+        showAlert(error.message ?? "failed to login", "error");
       },
       onSuccess() {
         navigate("/");

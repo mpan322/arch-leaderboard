@@ -20,3 +20,4 @@ export * from './userDto';
 export * from './validationError';
 export * from './validationErrorDetail';
 export * from './validationErrorDetailLocation';
+export * from './verifyDto';

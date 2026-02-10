@@ -3,6 +3,8 @@ import { Home } from './home';
 import App from './app';
 import { SignUp } from './sign-up';
 import { Login } from './login';
+import { Account } from './account';
+import { Otp } from './otp';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,15 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
-      }
+      },
+      {
+        path: "/account",
+        element: <Account />,
+      },
+      {
+        path: "/otp",
+        element: <Otp />,
+      },
     ],
   },
 ]);

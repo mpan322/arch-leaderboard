@@ -1,14 +1,17 @@
 import { Transition } from "@headlessui/react";
-import { createContext, useContext, useEffect, useState, type PropsWithChildren } from "react";
+import { createContext, useContext, useEffect, useState, type PropsWithChildren, type ReactNode } from "react";
 
+type Variant = "success" | "error";
 
 type AlertData = {
   message: string;
-  showAlert: (message: string) => void;
+  variant: "success" | "error";
+  showAlert: (message: string, variant: Variant) => void;
 }
 
 const AlertContext = createContext<AlertData>({
   message: "",
+  variant: "error",
   showAlert: () => { },
 })
 
@@ -21,6 +24,7 @@ export function useAlert() {
 
 export function AlertProvider({ children }: AlertProviderProps) {
   const [message, setMessage] = useState<string>("");
+  const [variant, setVariant] = useState<Variant>("error");
   const [hidden, setHidden] = useState<boolean>(true);
   const [nonce, setNonce] = useState<number>(0);
 
@@ -38,9 +42,11 @@ export function AlertProvider({ children }: AlertProviderProps) {
   return (
     <AlertContext.Provider value={{
       message,
-      showAlert(message) {
+      variant: "error",
+      showAlert(message, variant) {
         setNonce(Math.random());
         setMessage(message);
+        setVariant(variant);
       }
     }}>
       {children}
@@ -52,7 +58,8 @@ export function AlertProvider({ children }: AlertProviderProps) {
           leaveTo="opacity-0"
         >
           <div>
-            <Alert message={message} />
+            <Alert message={message}
+              variant={variant} />
           </div>
         </Transition>
       </div>
@@ -60,17 +67,51 @@ export function AlertProvider({ children }: AlertProviderProps) {
   );
 }
 
-type AlertProps = {
-  message: string;
+function getVariant(variant: Variant): string {
+  var className = "alert-error";
+  if (variant === "success") {
+    className = "alert-success";
+  } else {
+    className = "alert-error"
+  }
+  return className;
 }
-function Alert({ message }: AlertProps) {
-  return (
-    <div role="alert"
-      className="alert alert-error">
+
+function getIcon(variant: Variant): ReactNode {
+  if (variant === "error") {
+    return (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
+    );
+  } else {
+    return (
+      <svg className="humbleicons hi-check-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <g stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m8 13 2.5 2.5L16 10" />
+          <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </g>
+      </svg>
+    );
+  }
+}
+
+type AlertProps = {
+  message: string;
+  variant: Variant;
+}
+function Alert({
+  message,
+  variant
+}: AlertProps) {
+  const color = getVariant(variant);
+  const icon = getIcon(variant);
+
+  return (
+    <div role="alert"
+      className={`alert ${color}`}>
+      {icon}
       <p className="text-2xl">{message}</p>
-    </div>
+    </div >
   );
 }

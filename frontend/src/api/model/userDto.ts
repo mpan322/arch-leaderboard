@@ -8,4 +8,5 @@
 export interface UserDto {
   email: string;
   id: string;
+  is_verified: boolean;
 }

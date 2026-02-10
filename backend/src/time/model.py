@@ -20,5 +20,7 @@ class TimeModel(Base):
     language: Mapped[str]
     timestamp: Mapped[datetime] = mapped_column(server_default=func.now(), init=False)
 
-    posted_by: Mapped[str] = mapped_column(ForeignKey("user.id"), nullable=False)
+    posted_by: Mapped[str] = mapped_column(
+        ForeignKey("user.id", ondelete="CASCADE"), nullable=False
+    )
     poster: Mapped["UserModel"] = relationship(back_populates="times", init=False)

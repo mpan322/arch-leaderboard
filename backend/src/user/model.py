@@ -18,4 +18,9 @@ class UserModel(Base):
     otp: Mapped[str] = mapped_column(init=True)
     is_verified: Mapped[bool] = mapped_column(default=False, init=False)
 
-    times: Mapped[list["TimeModel"]] = relationship(back_populates="poster", init=False)
+    times: Mapped[list["TimeModel"]] = relationship(
+        back_populates="poster",
+        init=False,
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

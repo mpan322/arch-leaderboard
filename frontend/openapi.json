@@ -93,11 +93,16 @@
           "id": {
             "title": "Id",
             "type": "string"
+          },
+          "is_verified": {
+            "title": "Is Verified",
+            "type": "boolean"
           }
         },
         "required": [
           "id",
-          "email"
+          "email",
+          "is_verified"
         ],
         "title": "UserDto",
         "type": "object"
@@ -252,11 +257,16 @@
           "id": {
             "title": "Id",
             "type": "string"
+          },
+          "is_verified": {
+            "title": "Is Verified",
+            "type": "boolean"
           }
         },
         "required": [
           "id",
-          "email"
+          "email",
+          "is_verified"
         ],
         "title": "UserDto",
         "type": "object"
@@ -271,11 +281,16 @@
           "id": {
             "title": "Id",
             "type": "string"
+          },
+          "is_verified": {
+            "title": "Is Verified",
+            "type": "boolean"
           }
         },
         "required": [
           "id",
-          "email"
+          "email",
+          "is_verified"
         ],
         "title": "UserDto",
         "type": "object"
@@ -302,6 +317,19 @@
             "type": "string"
           }
         },
+        "type": "object"
+      },
+      "VerifyDto": {
+        "properties": {
+          "otp": {
+            "title": "Otp",
+            "type": "string"
+          }
+        },
+        "required": [
+          "otp"
+        ],
+        "title": "VerifyDto",
         "type": "object"
       }
     },
@@ -401,6 +429,76 @@
         ]
       }
     },
+    "/auth/logout": {
+      "post": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPError"
+                }
+              }
+            },
+            "description": "Authentication error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [],
+            "CookieAuth": []
+          }
+        ],
+        "summary": "Logout",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/resend-otp": {
+      "patch": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPError"
+                }
+              }
+            },
+            "description": "Authentication error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [],
+            "CookieAuth": []
+          }
+        ],
+        "summary": "Resend Otp",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
     "/auth/signup": {
       "post": {
         "parameters": [],
@@ -436,6 +534,60 @@
           }
         },
         "summary": "Signup",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/verify": {
+      "patch": {
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPError"
+                }
+              }
+            },
+            "description": "Authentication error"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "description": "Validation error"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": [],
+            "CookieAuth": []
+          }
+        ],
+        "summary": "Verify",
         "tags": [
           "Auth"
         ]

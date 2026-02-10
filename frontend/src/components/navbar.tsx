@@ -7,6 +7,7 @@ export function Navbar() {
         </a>
       </div>
       <div className="flex-none flex gap-4">
+        <a className="link" href="/account">Account</a>
         <a className="link" href="/login">Login</a>
         <a className="link" href="/sign-up">Sign up</a>
       </div>

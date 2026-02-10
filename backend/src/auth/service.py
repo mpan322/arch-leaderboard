@@ -4,12 +4,13 @@ from uuid import uuid4
 import jwt
 from apiflask import abort
 from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from pydantic import BaseModel
 
 from src.user.dto import ApiKeyDto, UserDto
 from src.user.model import UserModel
 from src.user.repo import UserRepo
-from src.utils import db, generate_otp
+from src.utils import generate_otp
 from src.utils.email import send_email
 from src.utils.settings import SETTINGS
 
@@ -39,8 +40,9 @@ class AuthService:
 
         # check the password
         password = dto.password.get_secret_value()
-        is_matches = AuthService.pswd_hasher.verify(user.password, password)
-        if not is_matches:
+        try:
+            AuthService.pswd_hasher.verify(user.password, password)
+        except VerifyMismatchError:
             abort(401, "incorrect email or password")
 
         # generate the access token and update in database

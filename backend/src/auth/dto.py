@@ -29,5 +29,9 @@ class LoginDto(BaseModel):
     password: SecretStr
 
 
+class LogoutDto(BaseModel):
+    message: str
+
+
 class VerifyDto(BaseModel):
     otp: str
